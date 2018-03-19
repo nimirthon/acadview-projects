@@ -38,6 +38,6 @@ else:
 	sys.exit(0)
 
 #Printing the result
-print("hello " + spy_salutation + spy_name)
-print("Your age is " + spy_age)
-print("Your rating is " + spy_rating)
+print("hello %s %s" % (spy_salutation, spy_name))
+print("Your age is %s" % (spy_age))
+print("Your rating is %s" % (spy_rating))
