@@ -33,8 +33,29 @@ def add_status(current_status_message):
 		item_position = item_position + 1
 		message_selection = input("\nChoose from the above messages ")
 		if len(STATUS_MESSAGES) >= message_selection:
-			updated_status_message = STATUS_MESSAGES[message_selection - 1]	
+			updated_status_message = STATUS_MESSAGES[message_selection - 1]
 	return updated_status_message
+
+#function to add Friend
+friends_name = []
+friends_age = []
+friends_rating = []
+friends_is_online = []
+def add_friend():
+	new_name = input("Please add your friend's name:")
+	new_salutation = input("Are they Mr. or Ms.?: ")
+	new_name = new_name + " " + new_salutation
+	new_age = input("Age?")
+	new_rating = input("Spy rating?")
+
+#Validate Name and Age
+if new_name.isalpha() == True and new_age > 12 and new_rating >= spy_rating:
+	friends_name.append(new_name)
+	friends_age.append(new_age)
+	friends_rating.append(new_rating)
+	friends_is_online.append(True)
+else:
+	print("Sorry! Invalid entry.")
 
 #Choice of profile
 print("Welcome to SpyChat")
