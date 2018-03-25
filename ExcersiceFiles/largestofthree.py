@@ -1,6 +1,6 @@
 # program to find maximum between three numbers
 
-print ("Enter any two numbers: ")
+print ("Enter any three numbers: ")
 num1 = int(input())
 num2 = int(input())
 num3 = int(input())

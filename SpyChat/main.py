@@ -1,13 +1,50 @@
 import sys
 import default
-print("Welcome to spychat")
-choice = input("Enter 1 if you want to have default settings: ")
-if choice == '1':
+
+#Function to add Menu
+def start_chat(spy_name, spy_salutation, spy_age, spy_rating):
+	current_status_message = None
+	show_menu = True
+	while (show_menu):
+		menu_choice = input("\n1. Add a status update. \n2. Close Application.\n")
+		if menu_choice == 1:
+			print('You have chosen to update the status.')
+			current_status_message = add_status(current_status_message)
+		elif menu_choice == 2:
+			show_menu = False
+
+#Function to add Status Message
+STATUS_MESSAGES = []
+def add_status(current_status_message):
+	if (current_status_message != None):
+		print("Your current status message is " +current_status_message+ "\n")
+	else:
+		print("You don't have any status message currently")
+	update_choice = input("Do you want to select from the older status (y/n)?")
+	if update_choice.upper() == "N":
+		new_status_message = input("What status message do you want to be set?")
+		if len(new_status_message) > 0:
+			updated_status_message = new_status_message
+			STATUS_MESSAGES.append(updated_status_message)
+		elif update_choice.upper() == 'Y':
+			item_position = 1
+		for message in STATUS_MESSAGES:
+			print (item_position + ". " + message)
+		item_position = item_position + 1
+		message_selection = input("\nChoose from the above messages ")
+		if len(STATUS_MESSAGES) >= message_selection:
+			updated_status_message = STATUS_MESSAGES[message_selection - 1]	
+	return updated_status_message
+
+#Choice of profile
+print("Welcome to SpyChat")
+menu_choice = input("Do you want to proceed with default settings or not?.\nEnter Y for Yes or N for No: ")
+if menu_choice.upper() ==  'Y':
 	spy_name = default.spy_name
 	spy_salutation = default.spy_salutation
 	spy_age = default.spy_age
 	spy_rating = default.spy_rating
-else:
+elif menu_choice.upper() ==  'N':
 	spy_name = input("Enter your Name: ")
 	spy_salutation = input("Enter your Salutation (Mr. or Mrs.): ")
 	spy_age = input("Enter your age: ")
@@ -41,3 +78,6 @@ else:
 print("hello %s %s" % (spy_salutation, spy_name))
 print("Your age is %s" % (spy_age))
 print("Your rating is %s" % (spy_rating))
+
+#Menu called
+start_chat(spy_name, spy_salutation, spy_age, spy_rating)
