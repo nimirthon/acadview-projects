@@ -9,7 +9,8 @@ def start_chat(spy_name, spy_age, spy_rating):
 	show_menu = True
 
 	while show_menu == True:
-		menu_choice = input("1. Add a status update.\n2. Add Friend.\n3. Exit application.\n")
+		menu_choice = input("\n1. Add a Status Update.\n2. Add Friend.\n3. Exit Application.\n")
+		print("Enter your choice: ")
 		if menu_choice == '1':
 			#update the status
 			print("You have chosen to add a status")
@@ -22,7 +23,7 @@ def start_chat(spy_name, spy_age, spy_rating):
 
 #Choice of profile
 print("Welcome to SpyChat")
-choice = input("Do you want to proceed with default settings or not (y/n)?: ")
+choice = input("Do you want to proceed with default settings or not (Y/N)?: ")
 
 spy = {
 	'name' : "",
@@ -39,7 +40,7 @@ if choice.upper() ==  'Y':
 else:
 	spy['name'] = input("Enter your name: ")
 	spy['age'] = int(input("What is your age?: "))
-	spy['rating'] = float(input("What is your rating?: "))
+	spy['rating'] = float(input("What is your rating? (0-5): "))
 	spy['is_online'] = True
 
 #Validation of name and age
@@ -52,15 +53,16 @@ if spy['age'] <= 12 or spy['age'] >= 50:
 	sys.exit(0)
 
 #Rating of the spy
-if spy_rating == 'A':
-	print("You are a 3 star Spy")
-elif spy_rating == 'B':
-	print("You are a 2 star Spy")
-elif spy_rating == 'C':
-	print("You are a 1 star Spy")
+if spy['rating'] >= 4 or spy['rating'] == 5:
+	print("You are an A grade Spy.")
+elif spy['rating'] >= 2 or spy['rating'] == 3.9:
+	print("You are an B grade Spy.")
+elif spy['rating'] >= 1 or spy['rating'] == 2.9:
+	print("You are an C grade Spy.")
 else:
 	print("You have entered an incorrect rating.")
 	sys.exit(0)
 
-print("hello " + spy['name'] + ".")
+#Starting Chat
+print("\nHello " + spy['name'] + ".")
 start_chat(spy['name'], spy['age'], spy['rating'])
