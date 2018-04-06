@@ -1,104 +1,79 @@
 import sys
-import default
+import spy_status
+from spy_details import SPY
+import spy_friend
 
-#Function to add Menu
-def start_chat(spy_name, spy_salutation, spy_age, spy_rating):
-	current_status_message = None
-	show_menu = True
-	while (show_menu):
-		menu_choice = input("\n1. Add a status update. \n2. Close Application.\n")
-		if menu_choice == 1:
-			print('You have chosen to update the status.')
-			current_status_message = add_status(current_status_message)
-		elif menu_choice == 2:
-			show_menu = False
+print("Welcome to SpyChat.")
 
-#Function to add Status Message
-STATUS_MESSAGES = []
-def add_status(current_status_message):
-	if (current_status_message != None):
-		print("Your current status message is " +current_status_message+ "\n")
+#Mod1: Creating the User Profile
+#Option to proceed with default values or enter new values
+print("Let's first create your profile.\n")
+profile_choice = input("Do you want to proceed with default settings or not (Y/N)?: ")
+
+if profile_choice.upper() == 'Y':
+	spy = SPY("Bond", "Mr.", 35, 4.8)
+else :
+	name = input("Enter your name: ")
+	salutation = input("Salutation? (Mr./ Mrs.): ")
+	age = int(input("What is your age?: "))
+	rating = float(input("What is your rating? (0-5): "))
+
+	#Validation of the user's name and age
+	if name.isalpha() == False:
+		print("\nGiven name is invalid.\nTerminating application")
+		sys.exit(0)
+
+	if age <= 12 or age >= 50:
+		print("\nGiven age is invalid.\nTerminating application")
+		sys.exit(0)
+
+	#Rating of the spy
+	if rating >= 4 or rating == 5:
+		print("You are an A grade Spy.")
+	elif rating >= 2 or rating == 3.9:
+		print("You are an B grade Spy.")
+	elif rating >= 1 or rating == 2.9:
+		print("You are an C grade Spy.")
 	else:
-		print("You don't have any status message currently")
-	update_choice = input("Do you want to select from the older status (y/n)?")
-	if update_choice.upper() == "N":
-		new_status_message = input("What status message do you want to be set?")
-		if len(new_status_message) > 0:
-			updated_status_message = new_status_message
-			STATUS_MESSAGES.append(updated_status_message)
-		elif update_choice.upper() == 'Y':
-			item_position = 1
-		for message in STATUS_MESSAGES:
-			print (item_position + ". " + message)
-		item_position = item_position + 1
-		message_selection = input("\nChoose from the above messages ")
-		if len(STATUS_MESSAGES) >= message_selection:
-			updated_status_message = STATUS_MESSAGES[message_selection - 1]
-	return updated_status_message
+		print("You have entered an incorrect rating.")
+		sys.exit(0)
 
-#function to add Friend
-friends_name = []
-friends_age = []
-friends_rating = []
-friends_is_online = []
-def add_friend():
-	new_name = input("Please add your friend's name:")
-	new_salutation = input("Are they Mr. or Ms.?: ")
-	new_name = new_name + " " + new_salutation
-	new_age = input("Age?")
-	new_rating = input("Spy rating?")
+	spy = SPY(name, salutation, age, rating)
 
-#Validate Name and Age
-if new_name.isalpha() == True and new_age > 12 and new_rating >= spy_rating:
-	friends_name.append(new_name)
-	friends_age.append(new_age)
-	friends_rating.append(new_rating)
-	friends_is_online.append(True)
-else:
-	print("Sorry! Invalid entry.")
+#Printing the details of the Spy
+print("\nHello %s %s " %(spy.salutation, spy.name))
+print("We have successfully created your account.")
 
-#Choice of profile
-print("Welcome to SpyChat")
-menu_choice = input("Do you want to proceed with default settings or not?.\nEnter Y for Yes or N for No: ")
-if menu_choice.upper() ==  'Y':
-	spy_name = default.spy_name
-	spy_salutation = default.spy_salutation
-	spy_age = default.spy_age
-	spy_rating = default.spy_rating
-elif menu_choice.upper() ==  'N':
-	spy_name = input("Enter your Name: ")
-	spy_salutation = input("Enter your Salutation (Mr. or Mrs.): ")
-	spy_age = input("Enter your age: ")
-	spy_rating = input("Enter your rating: ")
 
-#Validating the name of the spy
-if spy_name.isalpha() == False:
-	print("Name is Invalid")
-	sys.exit(0)
+#Mod2: Creating a menu.
+#function menu
+def start_chat():
+	show_menu = True
+	while show_menu:
+		print("\nYou can choose from the below Operations.")
+		print("1. Add Friend\n2. Add Status\n3. Send a Message\n4. Read a Message\n5. Close application")
+		menu_choice = int(input("What would your choice be: "))
 
-#Validating the age of the spy
-if int(spy_age) <= 12:
-	print("Age below 12")
-	sys.exit(0)
-elif int(spy_age) >= 50:
-	print("Age above 50")
-	sys.exit(0)
+		if menu_choice == 1:
+			print("\nYou have chosen to add a Friend.")
+			spy_friend.add_friend()
+		elif menu_choice == 2:
+			print("\nYou have chosen to update your Status.")
+			spy.current_status_message = spy_status.add_status(spy.current_status_message)
+		elif menu_choice == 3:
+			print("\nYou have chosen to send a Message to a Friend.")
+			spy_friend.send_message()
+		elif menu_choice == 4:
+			print("\nYou have chosen to read a Message from a Friend.")
+			spy_friend.read_message()
+		elif menu_choice == 5:
+			print("\nYou have chosen to terminate the application.")
+			show_menu = False
+		else:
+			print("\nInvalid choice entered.")
 
-#Rating of the spy
-if spy_rating == 'A':
-	print("You are a 3 star spy")
-elif spy_rating == 'B':
-	print("You are a 2 star spy")
-elif spy_rating == 'C':
-	print("You are a 1 star spy")
-else:
-	print("You have entered incorrect rating")
-	sys.exit(0)
-
-#Printing the result
-print("hello %s %s" % (spy_salutation, spy_name))
-print("Your age is %s" % (spy_age))
-print("Your rating is %s" % (spy_rating))
-
-#Menu called
-start_chat(spy_name, spy_salutation, spy_age, spy_rating)
+spy_friend.load_friends()
+spy.current_status_message = spy_status.load_status()
+start_chat()
+spy_friend.save_friends()
+spy_status.save_status()
