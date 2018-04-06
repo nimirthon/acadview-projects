@@ -74,13 +74,14 @@ def load_friends():
 	read_object = open("friends.csv", 'r')
 	reader = csv.reader(read_object)
 	for row in reader:
-		name = row[0]
-		salutation = row[1]
-		age = int(row[2])
-		rating = float(row[3])
-		is_online = bool(row[4])
-		new_friend = SPY(name, salutation, age, rating)
-		friends.append(new_friend)
+		if row:
+			name = row[0]
+			salutation = row[1]
+			age = int(row[2])
+			rating = float(row[3])
+			is_online = bool(row[4])
+			new_friend = SPY(name, salutation, age, rating)
+			friends.append(new_friend)
 	read_object.close()
 
 #Mod8: Save to file friends.csv
@@ -89,10 +90,11 @@ def save_friends():
 	write_object = open("friends.csv", 'w')
 	writer = csv.writer(write_object)
 	for i in range(len(friends)):
-		name = friends[i].name
-		salutation = friends[i].salutation
-		age = friends[i].age
-		rating = friends[i].rating
-		is_online = friends[i].is_online
-		writer.writerow([name,salutation,age,rating,is_online])
+		if friends:
+			name = friends[i].name
+			salutation = friends[i].salutation
+			age = friends[i].age
+			rating = friends[i].rating
+			is_online = friends[i].is_online
+			writer.writerow([name,salutation,age,rating,is_online])
 	write_object.close()

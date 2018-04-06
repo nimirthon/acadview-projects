@@ -36,7 +36,8 @@ def load_status():
 	read_object = open("status.csv", 'r')
 	reader = csv.reader(read_object)
 	for row in reader:
-		STATUS_MESSAGE.append(row[0])
+		if row:
+			STATUS_MESSAGE.append(row[0])
 	read_object.close()
 	if len(STATUS_MESSAGE) > 0:
 		return STATUS_MESSAGE[-1]
@@ -49,5 +50,6 @@ def save_status():
 	write_object = open("status.csv", 'w')
 	writer = csv.writer(write_object)
 	for i in range(len(STATUS_MESSAGE)):
-		writer.writerow([STATUS_MESSAGE[i]])
+		if i:
+			writer.writerow([STATUS_MESSAGE[i]])
 	write_object.close()
