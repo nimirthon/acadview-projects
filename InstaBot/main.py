@@ -10,7 +10,8 @@ def self_info():
     user_info = requests.get(request_url).json()
 
     if user_info['meta']['code'] == 200:
-        print('Status code 200 received successfully!')
+        print(user_info['data']['id'])
+        print(user_info['data']['username'])
     else:
         print('Status code other than 200 received!')
 
